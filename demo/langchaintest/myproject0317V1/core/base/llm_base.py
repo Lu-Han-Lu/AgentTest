@@ -1,10 +1,7 @@
 # demo/langchaintest/myproject0317V1/core/base/llm_base.py
 """统一LLM调用层：供RAG/Agent复用，统一配置/调用/异常处理"""
-import re
-from typing import Dict, Any
 
 from langchain_openai import ChatOpenAI
-from langchain_core.callbacks import CallbackManager
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.runnables import RunnablePassthrough
 

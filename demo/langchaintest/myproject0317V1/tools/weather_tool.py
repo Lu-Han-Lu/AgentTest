@@ -1,5 +1,4 @@
 """天气查询工具（Mock 版）：适配BaseAgentTool接口，无第三方API依赖"""
-from typing import Optional
 import re
 
 from demo.langchaintest.myproject0317V1.core.base.tool_base import BaseAgentTool

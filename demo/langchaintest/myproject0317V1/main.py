@@ -2,8 +2,10 @@
 """统一入口：演示RAG和Agent的底层打通"""
 import os
 
-os.environ[
-    'USER_AGENT'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+from demo.langchaintest.myproject0317V1.config import USER_AGENT, VECTOR_STORE_PATH, LONG_TERM_MEMORY_PATH, \
+    DOCUMENT_PATH
+
+os.environ['USER_AGENT'] = USER_AGENT
 
 from demo.langchaintest.myproject0317V1.core.agent.tool_agent import ToolAgent
 from demo.langchaintest.myproject0317V1.core.base.memory_manager import MemoryManager
@@ -22,12 +24,12 @@ from demo.langchaintest.myproject0317V1.tools.web_search_tool import web_search_
 
 if __name__ == "__main__":
     # 1. 初始化通用组件（RAG和Agent复用）
-    doc_manager = DocumentManager("./chroma_db")
-    memory_manager = MemoryManager("./long_term_memory")
+    doc_manager = DocumentManager(VECTOR_STORE_PATH)
+    memory_manager = MemoryManager(LONG_TERM_MEMORY_PATH)
     tool_registry = ToolRegistry()
 
     # 2. 加载文档（仅需执行一次）
-    source_paths = ["./docs/"]
+    source_paths = [DOCUMENT_PATH]
     documents = doc_manager.load_documents(source_paths)
     chunks = doc_manager.split_documents(documents)
     doc_manager.update_vectorstore(chunks)

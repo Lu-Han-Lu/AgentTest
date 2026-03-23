@@ -1,6 +1,6 @@
 # demo/langchaintest/myproject0317V1/core/rag/retriever_ext.py
 """检索器扩展：实现多粒度检索、路由检索等高级功能"""
-from typing import List, Dict, Any, Callable
+from typing import List
 
 from langchain_classic.retrievers import MultiQueryRetriever
 from langchain_core.documents import Document

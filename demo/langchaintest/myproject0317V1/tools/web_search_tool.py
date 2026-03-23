@@ -1,8 +1,5 @@
 """联网搜索工具：适配BaseAgentTool接口"""
 import os
-from typing import Optional
-
-# 使用新包导入（兼容旧版本）
 from langchain_tavily import TavilySearch
 
 from demo.langchaintest.myproject0317V1.core.base.tool_base import BaseAgentTool

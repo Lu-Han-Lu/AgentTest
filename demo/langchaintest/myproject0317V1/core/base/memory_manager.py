@@ -1,8 +1,7 @@
 # demo/langchaintest/myproject0317V1/core/base/memory_manager.py
 """统一记忆管理：支持会话记忆+长期记忆，供RAG和Agent复用"""
-from typing import List, Dict, Tuple, Any, Optional
+from typing import List, Dict, Tuple
 from datetime import datetime
-import json
 import os
 
 from langchain_chroma import Chroma
@@ -10,6 +9,7 @@ from langchain_core.messages import HumanMessage, AIMessage, BaseMessage
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_core.documents import Document
 
+from demo.langchaintest.myproject0317V1.config import LONG_TERM_MEMORY_PATH, SESSION_MEMORY_MAX_ROUNDS
 from demo.langchaintest.myproject0317V1.utils.embedding_utils import create_embeddings
 
 
@@ -18,12 +18,13 @@ class MemoryManager:
     - 会话记忆：短期、小窗口、高优先级
     - 长期记忆：持久化、向量检索、低优先级
     """
+
     def __init__(
-        self,
-        long_term_memory_path: str = "./long_term_memory",
-        session_memory_max_rounds: int = 5,
-        embedding_model_name: str = None,
-        embedding_device: str = None
+            self,
+            long_term_memory_path: str = LONG_TERM_MEMORY_PATH,
+            session_memory_max_rounds: int = SESSION_MEMORY_MAX_ROUNDS,
+            embedding_model_name: str = None,
+            embedding_device: str = None
     ):
         # 会话记忆（内存）：{user_id: [(q, a, timestamp), ...]}
         self.session_memories: Dict[str, List[Tuple[str, str, float]]] = {}
@@ -117,7 +118,8 @@ class MemoryManager:
             # 移除persist()调用，新版Chroma自动持久化
 
     # ========== 统一记忆转换（RAG/Agent 复用） ==========
-    def convert_memory_to_messages(self, user_id: str, include_long_term: bool = False, query: str = "") -> List[BaseMessage]:
+    def convert_memory_to_messages(self, user_id: str, include_long_term: bool = False, query: str = "") -> List[
+        BaseMessage]:
         """
         统一将记忆转换为LangChain消息格式
         :param user_id: 用户ID

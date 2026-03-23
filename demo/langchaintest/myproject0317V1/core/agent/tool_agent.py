@@ -1,6 +1,6 @@
 # demo/langchaintest/myproject0317V1/core/agent/tool_agent.py
 """Agent对话：复用通用记忆/工具/检索接口，集成RAG工具"""
-from typing import List, Dict, Any, Optional
+from typing import Dict, Any
 
 from langchain_core.messages import HumanMessage
 from langchain_openai import ChatOpenAI

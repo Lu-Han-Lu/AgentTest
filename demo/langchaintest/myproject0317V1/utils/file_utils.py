@@ -17,9 +17,18 @@ from langchain_community.document_loaders import (
 )
 import glob
 
+try:
+    from langchain_community.document_loaders import UnstructuredWordDocumentLoader
+
+    UNSTRUCTURED_AVAILABLE = True
+except ImportError:
+    UNSTRUCTURED_AVAILABLE = False
+    print("警告：未安装 unstructured 库，.doc 文件将无法加载。运行：pip install unstructured")
+
 
 class FileRegistry:
     """管理已处理文件的注册表"""
+
     def __init__(self, registry_path: str = "./file_registry.json"):
         self.registry_path = registry_path
         self.data = self._load()
@@ -93,6 +102,15 @@ def load_single_document(file_path: str, **kwargs) -> List[Document]:
         elif file_type == 'docx':
             loader = Docx2txtLoader(file_path)
             return loader.load()
+
+        elif file_type == 'doc':  # .doc 是二进制格式，需要特殊处理
+            if UNSTRUCTURED_AVAILABLE:
+                print(f"使用 UnstructuredWordDocumentLoader 加载：{file_path}")
+                loader = UnstructuredWordDocumentLoader(file_path)
+                return loader.load()
+            else:
+                print(f"跳过 .doc 文件（需要安装 unstructured 库）: {file_path}")
+                return []
 
         elif file_type == 'xlsx':
             loader = UnstructuredExcelLoader(file_path, mode="elements")

@@ -1,13 +1,14 @@
 # demo/langchaintest/myproject0317V1/core/base/tool_base.py
 """统一工具接口：供Agent复用，也可扩展RAG的工具能力"""
 from abc import ABC, abstractmethod
-from typing import Dict, Any, List
+from typing import Dict, List
 from langchain_core.tools import BaseTool, Tool
 from langchain_core.callbacks import CallbackManagerForToolRun
 
 
 class BaseAgentTool(ABC):
     """Agent工具基类：定义统一接口"""
+
     @property
     @abstractmethod
     def name(self) -> str:
@@ -27,10 +28,11 @@ class BaseAgentTool(ABC):
 
     def to_langchain_tool(self) -> BaseTool:
         """转换为LangChain Tool对象（统一适配Agent）"""
+
         def _run(
-            query: str,
-            run_manager: CallbackManagerForToolRun = None,
-            **kwargs
+                query: str,
+                run_manager: CallbackManagerForToolRun = None,
+                **kwargs
         ) -> str:
             return self.run(query, **kwargs)
 
@@ -44,6 +46,7 @@ class BaseAgentTool(ABC):
 # 工具注册中心（供Agent复用）
 class ToolRegistry:
     """工具注册中心：统一管理所有工具"""
+
     def __init__(self):
         self.tools: Dict[str, BaseAgentTool] = {}
 

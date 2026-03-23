@@ -7,7 +7,7 @@ from langchain_chroma import Chroma
 from langchain_core.documents import Document
 from langchain_core.vectorstores import VectorStoreRetriever
 
-from demo.langchaintest.myproject0317V1.config import VECTOR_STORE_PATH, REGISTRY_PATH
+from demo.langchaintest.myproject0317V1.config import VECTOR_STORE_PATH, FILE_REGISTRY_PATH
 from demo.langchaintest.myproject0317V1.utils.embedding_utils import create_embeddings
 from demo.langchaintest.myproject0317V1.utils.file_utils import FileRegistry, load_documents_from_paths
 
@@ -18,7 +18,7 @@ class DocumentManager:
     def __init__(
             self,
             vector_store_path: str = VECTOR_STORE_PATH,
-            registry_path: str = REGISTRY_PATH,
+            registry_path: str = FILE_REGISTRY_PATH,
             embedding_model_name: str = None
     ):
         # 路径配置
@@ -74,8 +74,9 @@ class DocumentManager:
                 mtime = os.path.getmtime(source) if os.path.exists(source) else 0
                 self.file_registry.update_file(source, mtime, [doc_id])
 
-        # 持久化向量库
-        self.vectorstore.persist()
+        # Deleted:# 持久化向量库
+        # Deleted:self.vectorstore.persist()
+        # 新版 ChromaDB 自动持久化，无需手动调用 persist()
 
         return doc_ids
 

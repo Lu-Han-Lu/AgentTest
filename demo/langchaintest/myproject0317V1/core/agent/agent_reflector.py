@@ -1,6 +1,6 @@
 # demo/langchaintest/myproject0317V1/core/agent/agent_reflector.py
 """Agent反思模块：实现Self-RAG/自我修正，对标业界标杆"""
-from typing import Dict, Any, List, Optional
+from typing import Dict, Any, List
 from langchain_core.prompts import PromptTemplate
 
 from demo.langchaintest.myproject0317V1.core.base.llm_base import LLMManager

@@ -1,7 +1,7 @@
 # demo/langchaintest/myproject0317V1/core/base/retriever_base.py
 """统一检索接口：供RAG直接使用，也供Agent作为工具调用"""
 from abc import ABC, abstractmethod
-from typing import List, Dict, Any
+from typing import List
 
 from langchain_classic.retrievers import EnsembleRetriever, ContextualCompressionRetriever
 from langchain_core.documents import Document
